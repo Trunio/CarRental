@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DataBase.OrdersArchiveEntity" table="OrdersArchive" schema="dbo" catalog="master">
+        <id name="id">
+            <column name="ID" sql-type="int"/>
+            <generator class="native" />
+        </id>
+
+        <property name="Orders_Id">
+            <column name="Orders_Id" sql-type="int"/>
+        </property>
+
+        <property name="orderScore">
+            <column name="Order_Score" sql-type="int"/>
+        </property>
+        <property name="carScore">
+            <column name="Car_Score" sql-type="int"/>
+        </property>
+        <property name="rentalDate">
+            <column name="Rental_Date" sql-type="date"/>
+        </property>
+        <property name="returnDate">
+            <column name="Return_Date" sql-type="date"/>
+        </property>
+        <many-to-one name="carByCarId" class="DataBase.CarEntity">
+            <column name="Car_Id"/>
+        </many-to-one>
+        <many-to-one name="sellerBySellerId" class="DataBase.SellerEntity">
+            <column name="Seller_Id"/>
+        </many-to-one>
+        <many-to-one name="clientByClientId" class="DataBase.ClientEntity">
+            <column name="Client_Id"/>
+        </many-to-one>
+        <many-to-one name="RentalBaseEntitybyID" class="DataBase.RentalBaseEntity">
+            <column name="id_Base"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

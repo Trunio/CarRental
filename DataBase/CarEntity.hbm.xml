@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+        <!DOCTYPE hibernate-mapping PUBLIC
+                "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+<class name="DataBase.CarEntity" table="Car" schema="dbo" catalog="master">
+    <id name="id">
+        <column name="ID" sql-type="int"/>
+        <generator class="native" />
+    </id>
+    <many-to-one name="RentalBaseEntityByRentalBaseId" class="DataBase.RentalBaseEntity">
+        <column name="RentalBase_id"/>
+    </many-to-one>
+    <property name="mark">
+        <column name="Mark" sql-type="varchar(20)" length="20"/>
+    </property>
+    <property name="color">
+        <column name="Color" sql-type="varchar(20)" length="20"/>
+    </property>
+    <property name="productionDate">
+        <column name="Production_Date" sql-type="date"/>
+    </property>
+    <property name="price">
+        <column name="Price" sql-type="float" precision="-1"/>
+    </property>
+    <property name="category">
+        <column name="Category" sql-type="varchar(20)" length="20"/>
+    </property>
+</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DataBase.OrdersEntity" table="Orders" schema="dbo" catalog="master">
+        <id name="id">
+            <column name="ID" sql-type="int"/>
+            <generator class="native" />
+        </id>
+        <property name="rentalDate">
+            <column name="Rental_Date" sql-type="date"/>
+        </property>
+        <property name="returnDate">
+            <column name="Return_Date" sql-type="date"/>
+        </property>
+        <many-to-one name="carByCarId" class="DataBase.CarEntity">
+            <column name="Car_Id"/>
+        </many-to-one>
+        <many-to-one name="sellerBySellerId" class="DataBase.SellerEntity">
+            <column name="Seller_Id"/>
+        </many-to-one>
+        <many-to-one name="clientByClientId" class="DataBase.ClientEntity">
+            <column name="Client_Id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

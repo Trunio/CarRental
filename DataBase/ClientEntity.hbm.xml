@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="DataBase.ClientEntity" table="Client" schema="dbo" catalog="master">
+        <id name="id">
+            <column name="ID" sql-type="int"/>
+            <generator class="native" />
+        </id>
+        <property name="name">
+            <column name="Name" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="surname">
+            <column name="Surname" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="telephone">
+            <column name="Telephone" sql-type="varchar(20)" length="20"/>
+        </property>
+        <many-to-one name="adressByAdressId" class="DataBase.Adress">
+            <column name="Adress_ID"/>
+        </many-to-one>
+        <many-to-one name="LoginEntityByID" class="DataBase.LoginEntity">
+            <column name="Login_ID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
