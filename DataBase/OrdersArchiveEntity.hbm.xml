@@ -26,18 +26,21 @@
         <property name="returnDate">
             <column name="Return_Date" sql-type="date"/>
         </property>
-        <many-to-one name="carByCarId" class="DataBase.CarEntity">
-            <column name="Car_Id"/>
-        </many-to-one>
-        <many-to-one name="sellerBySellerId" class="DataBase.SellerEntity">
-            <column name="Seller_Id"/>
-        </many-to-one>
-        <many-to-one name="clientByClientId" class="DataBase.ClientEntity">
-            <column name="Client_Id"/>
-        </many-to-one>
-        <many-to-one name="RentalBaseEntitybyID" class="DataBase.RentalBaseEntity">
-            <column name="id_Base"/>
-        </many-to-one>
+        <property  name="carByCarId">
+            <column name="Car_Id"  sql-type="int" />
+        </property>
+
+        <property  name="sellerBySellerId">
+            <column name="Seller_Id"  sql-type="int" />
+        </property>
+
+        <property  name="clientByClientId">
+            <column name="Client_Id"  sql-type="int" />
+        </property>
+
+        <property name="RentalBaseEntitybyID">
+            <column name="id_Base"  sql-type="int" />
+        </property>
 
     </class>
 </hibernate-mapping>

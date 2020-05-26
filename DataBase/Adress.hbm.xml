@@ -10,16 +10,17 @@
         <generator class="native" />
     </id>
     <property name="street">
-        <column name="Street" sql-type="varchar(20)" length="20"/>
+        <column name="Street" sql-type="varchar(50)" length="50"/>
     </property>
     <property name="house">
-        <column name="House" sql-type="varchar(20)" length="20"/>
+        <column name="House" sql-type="varchar(50)" length="50"/>
     </property>
     <property name="city">
-        <column name="City" sql-type="varchar(20)" length="20"/>
+        <column name="City" sql-type="varchar(50)" length="50"/>
     </property>
     <property name="postCode">
-        <column name="PostCode" sql-type="varchar(20)" length="20"/>
+        <column name="PostCode" sql-type="varchar(50)" length="50"/>
     </property>
 </class>
 </hibernate-mapping>
+

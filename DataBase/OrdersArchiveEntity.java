@@ -12,10 +12,10 @@ public class OrdersArchiveEntity {
     private int carScore;
     private Date rentalDate;
     private Date returnDate;
-    private CarEntity carByCarId;
-    private SellerEntity sellerBySellerId;
-    private ClientEntity clientByClientId;
-    private RentalBaseEntity RentalBaseEntitybyID;
+    private int carByCarId;
+    private int sellerBySellerId;
+    private int clientByClientId;
+    private int RentalBaseEntitybyID;
     private int Orders_Id;
 
     @Id
@@ -79,6 +79,48 @@ public class OrdersArchiveEntity {
         this.returnDate = returnDate;
     }
 
+    @Basic
+    @Column(name = "Seller_Id")
+    public int getSellerBySellerId() {
+        return sellerBySellerId;
+    }
+
+    public void setSellerBySellerId(int sellerBySellerId) {
+        this.sellerBySellerId = sellerBySellerId;
+    }
+
+    @Basic
+    @Column(name = "Client_Id", nullable = false)
+    public int getClientByClientId() {
+        return clientByClientId;
+    }
+
+    public void setClientByClientId(int clientByClientId) {
+        this.clientByClientId = clientByClientId;
+    }
+
+
+    @Basic
+    @Column(name = "id_Base", nullable = false)
+    public int getRentalBaseEntitybyID() {
+        return RentalBaseEntitybyID;
+    }
+
+    public void setRentalBaseEntitybyID(int RentalBaseEntitybyID) {
+        this.RentalBaseEntitybyID = RentalBaseEntitybyID;
+    }
+
+    @Basic
+    @Column(name = "Car_Id",  nullable = false)
+    public int getCarByCarId() {
+        return carByCarId;
+    }
+
+    public void setCarByCarId(int carByCarId) {
+        this.carByCarId = carByCarId;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,54 +128,12 @@ public class OrdersArchiveEntity {
         OrdersArchiveEntity that = (OrdersArchiveEntity) o;
         return id == that.id &&
                 orderScore == that.orderScore &&
-                carScore == that.carScore  && Objects.equals(rentalDate, that.rentalDate) &&
-                Objects.equals(returnDate, that.returnDate) ;
+                carScore == that.carScore && Objects.equals(rentalDate, that.rentalDate) &&
+                Objects.equals(returnDate, that.returnDate);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, orderScore, carScore, rentalDate, returnDate);
     }
-
-
-    @ManyToOne
-    @JoinColumn(name = "id_Base", referencedColumnName = "ID", nullable = false)
-    public RentalBaseEntity getRentalBaseEntitybyID() {
-        return RentalBaseEntitybyID;
-    }
-
-    public void setRentalBaseEntitybyID(RentalBaseEntity RentalBaseEntitybyID) {
-        this.RentalBaseEntitybyID = RentalBaseEntitybyID;
-    }
-    @ManyToOne
-    @JoinColumn(name = "Car_Id", referencedColumnName = "ID", nullable = false)
-    public CarEntity getCarByCarId() {
-        return carByCarId;
-    }
-
-    public void setCarByCarId(CarEntity carByCarId) {
-        this.carByCarId = carByCarId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "Seller_Id", referencedColumnName = "ID")
-    public SellerEntity getSellerBySellerId() {
-        return sellerBySellerId;
-    }
-
-    public void setSellerBySellerId(SellerEntity sellerBySellerId) {
-        this.sellerBySellerId = sellerBySellerId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "Client_Id", referencedColumnName = "ID", nullable = false)
-    public ClientEntity getClientByClientId() {
-        return clientByClientId;
-    }
-
-    public void setClientByClientId(ClientEntity clientByClientId) {
-        this.clientByClientId = clientByClientId;
-    }
 }
-
-

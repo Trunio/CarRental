@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:sqlserver://localhost:1433;database=master;;user=sa;password=kondrat17</property>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <mapping class="DataBase.Adress"/>
+        <mapping resource="DataBase/Adress.hbm.xml"/>
+        <mapping class="DataBase.CarEntity"/>
+        <mapping resource="DataBase/CarEntity.hbm.xml"/>
+        <mapping class="DataBase.ClientEntity"/>
+        <mapping resource="DataBase/ClientEntity.hbm.xml"/>
+        <mapping class="DataBase.OrdersEntity"/>
+        <mapping resource="DataBase/OrdersEntity.hbm.xml"/>
+        <mapping class="DataBase.OrdersArchiveEntity"/>
+        <mapping resource="DataBase/OrdersArchiveEntity.hbm.xml"/>
+         <mapping class="DataBase.RentalBaseEntity"/>
+           <mapping resource="DataBase/RentalBaseEntity.hbm.xml"/>
+          <mapping class="DataBase.RepairmentsEntity"/>
+          <mapping resource="DataBase/RepairmentsEntity.hbm.xml"/>
+          <mapping class="DataBase.SellerEntity"/>
+          <mapping resource="DataBase/SellerEntity.hbm.xml"/>
+        <mapping resource="DataBase/LoginEntity.hbm.xml"/>
+        <mapping class="DataBase.LoginEntity"/>
+
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

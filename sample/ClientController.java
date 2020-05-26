@@ -4,6 +4,7 @@ package sample;
 import CRUD.OrdersArchiveCRUD;
 import CRUD.OrdersCRUD;
 import DataBase.*;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.hibernate.HibernateException;
@@ -42,6 +44,7 @@ public class ClientController implements Initializable {
     LoginEntity login = Controller.user;
     Query query = session.createQuery("from ClientEntity WHERE LoginEntityByID = :wartosc");
     ClientEntity client = new ClientEntity();
+    OrdersArchiveEntity past = new OrdersArchiveEntity();
 
     int baseid =1;
 
@@ -66,11 +69,7 @@ public class ClientController implements Initializable {
     public TextField EmailLogin;
     public TextField PasswordLogin;
     public Label DateError;
-
     public TableView<CarEntity> RentTable;
-
-
-
     public TableColumn<CarEntity, String> RentBrand;
     public TableColumn<CarEntity, String> RentColor;
     public TableColumn<CarEntity, Date> RentDate;
@@ -82,13 +81,8 @@ public class ClientController implements Initializable {
     public TableColumn<CarEntity, Date> MyCarDate;
     public TableColumn<CarEntity,String> MyCarCategory;
     public TableColumn<CarEntity,Double> MyCarPrice;
-
     public TableView<OrdersArchiveEntity> HistoryTable;
-    public TableColumn<OrdersArchiveEntity, String> HistoryBrand;
-    public TableColumn<OrdersArchiveEntity, String> HistoryColor;
-    public TableColumn<OrdersArchiveEntity, String> HistoryDate;
-    public TableColumn<OrdersArchiveEntity,String> HistoryCategory;
-    public TableColumn<OrdersArchiveEntity, Double> HistoryPrice;
+
     public TableColumn<OrdersArchiveEntity, Integer> HistoryCarScore;
     public TableColumn<OrdersArchiveEntity, Integer> HistoryOrderScore;
     public TableColumn<OrdersArchiveEntity, Date> HistoryRentalDate;
@@ -111,6 +105,12 @@ public class ClientController implements Initializable {
     public TextField OrderScore;
     public TextField CarScore;
     public Label NoCarError;
+    public TableView<CarEntity> MyCarTable1;
+    public TableColumn<CarEntity, String>  MyCarBrand1;
+    public TableColumn<CarEntity, String>  MyCarColor1;
+    public TableColumn<CarEntity, Date>  MyCarDate1;
+    public TableColumn<CarEntity, String>  MyCarCategory1;
+    public TableColumn <CarEntity,Double>MyCarPrice1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -131,13 +131,21 @@ public class ClientController implements Initializable {
     MyCarDate.setCellValueFactory(new PropertyValueFactory<CarEntity, Date>("productionDate"));
     MyCarCategory.setCellValueFactory(new PropertyValueFactory<CarEntity,String>("category"));
     MyCarPrice.setCellValueFactory(new PropertyValueFactory<CarEntity,Double>("price"));
+        MyCarBrand1.setCellValueFactory(new PropertyValueFactory<CarEntity, String>("mark"));
+        MyCarColor1.setCellValueFactory(new PropertyValueFactory<CarEntity,String>("color"));
+        MyCarDate1.setCellValueFactory(new PropertyValueFactory<CarEntity, Date>("productionDate"));
+        MyCarCategory1.setCellValueFactory(new PropertyValueFactory<CarEntity,String>("category"));
+        MyCarPrice1.setCellValueFactory(new PropertyValueFactory<CarEntity,Double>("price"));
 
 
+/*
     HistoryBrand.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCarByCarId().getMark()));
     HistoryColor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCarByCarId().getColor()));
     HistoryDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCarByCarId().getProductionDate().toString()));
     HistoryCategory.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCarByCarId().getCategory()));
     HistoryPrice.setCellValueFactory(cellData -> new SimpleObjectProperty<Double>(cellData.getValue().getCarByCarId().getPrice()));
+    */
+
     HistoryCarScore.setCellValueFactory(new PropertyValueFactory<OrdersArchiveEntity,Integer>("carScore"));
     HistoryOrderScore.setCellValueFactory(new PropertyValueFactory<OrdersArchiveEntity,Integer>("orderScore"));
     HistoryRentalDate.setCellValueFactory(new PropertyValueFactory<OrdersArchiveEntity,Date>("rentalDate"));
@@ -146,12 +154,7 @@ public class ClientController implements Initializable {
 
     List Baza = session.createQuery("from RentalBaseEntity").list();
     ObservableList<RentalBaseEntity> Bazy = FXCollections.observableArrayList(Baza);
-    RentalBaseEntity base2 = Bazy.get(1);
 
-    Query query = session.createQuery("from CarEntity WHERE RentalBaseEntityByRentalBaseId = :wartosc");
-    query.setParameter("wartosc", base2);
-    List Autka = query.list();
-    ObservableList<CarEntity> AutkaObs = FXCollections.observableArrayList(Autka);
 
     Query query2 = session.createQuery("select c from CarEntity c, OrdersEntity o where o.carByCarId.id = c.id");
     List order = query2.list();
@@ -163,21 +166,29 @@ public class ClientController implements Initializable {
     List usercars = query3.list();
     ObservableList<CarEntity> UserAvaibleCars = FXCollections.observableArrayList(usercars);
 
-    AutkaObs.removeAll(OrderList);
+  //  AutkaObs.removeAll(OrderList);
     ChoiceBoxBase.setItems(Bazy);
-    RentTable.setItems(AutkaObs);
+   // RentTable.setItems(AutkaObs);
     MyCarTable.setItems(UserAvaibleCars);
     refreshHistory();
 
     }
 
     public void refreshHistory(){
-        Query queryHist = session.createQuery("from OrdersArchiveEntity where clientByClientId.id=:cos");
+        Query queryHist = session.createQuery("from OrdersArchiveEntity where clientByClientId=:cos");
         queryHist.setParameter("cos", client.getId());
         List<OrdersArchiveEntity> HistoryList = queryHist.list();
         ObservableList <OrdersArchiveEntity> Historia = FXCollections.observableArrayList(HistoryList);
         HistoryTable.setItems(Historia);
 
+    }
+
+    public void refreshPastCar(){
+        Query query = session.createQuery("from CarEntity WHERE :wartosc = id");
+        query.setParameter("wartosc", past.getCarByCarId());
+        List Autka = query.list();
+        ObservableList<CarEntity> AutkaObs = FXCollections.observableArrayList(Autka);
+        MyCarTable1.setItems(AutkaObs);
     }
 
     @FXML
@@ -213,7 +224,7 @@ public class ClientController implements Initializable {
            System.out.println(car.getId());
            OrdersCRUD maker = new OrdersCRUD();
            Date date2 = Date.valueOf(returndata);
-           DateError.setText("RETURN DATE CANNOT BY EARLIER THAN THE DATE OF RENTING");
+           DateError.setText("RETURN DATE CANNOT OCCUR BEFORE THE DATE OF RENTING");
             if(date2.after(date)) {
                 DateError.setText("");
                 Query query2 = session.createQuery("from ClientEntity WHERE LoginEntityByID = :wartosc");
@@ -250,34 +261,47 @@ public class ClientController implements Initializable {
     @FXML
     private void  ReturnCarPressed(ActionEvent event) throws IOException
     {
-        CarEntity car = MyCarTable.getSelectionModel().getSelectedItem();
-        NoCarError.setText("You need to choose a car first");
-        if(!car.getMark().equals("")) {
-            NoCarError.setText("");
-            CarScoreError.setText("Car Score  and Order Score must be set to number beetwen 1-10");
-            if (!CarScore.getText().trim().equals("") && !OrderScore.getText().trim().equals("")) {
-                CarScoreError.setText("");
-                int carscore = Integer.parseInt(CarScore.getText());
-                int orderscore = Integer.parseInt(OrderScore.getText());
-                int baseid = car.getRentalBaseEntityByRentalBaseId().getId();
-                RentalBaseEntity base = session.byId(RentalBaseEntity.class).getReference(baseid);
-                Query query10 = session.createQuery("select c from OrdersEntity c WHERE c.carByCarId = :wartosc");
-                query10.setParameter("wartosc", car);
-                OrdersEntity order = (OrdersEntity) query10.uniqueResult();
-                OrdersArchiveCRUD create = new OrdersArchiveCRUD();
-                OrdersCRUD delete = new OrdersCRUD();
-                create.saveOrdersArchiveEntity(orderscore, carscore, base, order.getId(), order.getRentalDate(), order.getReturnDate(), order.getCarByCarId(), order.getSellerBySellerId(), order.getClientByClientId());
-                MyCarTable.getItems().remove(car);
-                delete.deleteOrdersEntity(order.getId());
-                refreshHistory();
+        try {
+            CarEntity car = MyCarTable.getSelectionModel().getSelectedItem();
+            NoCarError.setText("You need to choose a car first");
+            if (!car.getMark().equals("")) {
+                NoCarError.setText("");
+                CarScoreError.setText("Car Score  and Order Score must be set to number beetwen 1-10");
+                if (!CarScore.getText().trim().equals("") && !OrderScore.getText().trim().equals("")) {
+                    CarScoreError.setText("");
+                    int carscore = Integer.parseInt(CarScore.getText());
+                    int orderscore = Integer.parseInt(OrderScore.getText());
+                    int baseid = car.getRentalBaseEntityByRentalBaseId().getId();
+                    RentalBaseEntity base = session.byId(RentalBaseEntity.class).getReference(baseid);
+                    Query query10 = session.createQuery("select c from OrdersEntity c WHERE c.carByCarId = :wartosc");
+                    query10.setParameter("wartosc", car);
+                    OrdersEntity order = (OrdersEntity) query10.uniqueResult();
+                    OrdersArchiveCRUD create = new OrdersArchiveCRUD();
+                    OrdersCRUD delete = new OrdersCRUD();
+                    create.saveOrdersArchiveEntity(orderscore, carscore, base.getId(), order.getId(), order.getRentalDate(), order.getReturnDate(), order.getCarByCarId().getId(), order.getSellerBySellerId().getId(), order.getClientByClientId().getId());
+                    MyCarTable.getItems().remove(car);
+                    delete.deleteOrdersEntity(order.getId());
+                    refreshHistory();
+                }
             }
+            }
+        catch(Exception e) {
+            CarScoreError.setText("Before returning the car, the order must be confirmed by the seller");
         }
-    }
-
+        }
 
     @FXML
     private void SelectDate(ActionEvent event){
         System.out.println(RentCarDate.getValue());
+    }
+
+    public void SelectPastOrder(MouseEvent mouseEvent) {
+        past = HistoryTable.getSelectionModel().getSelectedItem();
+        refreshPastCar();
+    }
+
+    public void Close(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }
 

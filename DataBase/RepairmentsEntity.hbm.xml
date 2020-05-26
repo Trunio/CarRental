@@ -10,19 +10,19 @@
             <generator class="native" />
         </id>
         <property name="engine">
-            <column name="Engine" sql-type="varchar(20)" length="20"/>
+            <column name="Engine" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="tire">
-            <column name="Tire" sql-type="varchar(20)" length="20"/>
+            <column name="Tire" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="frontWindows">
-            <column name="FrontWindows" sql-type="varchar(20)" length="20"/>
+            <column name="FrontWindows" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="doors">
-            <column name="Doors" sql-type="varchar(20)" length="20"/>
+            <column name="Doors" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="body">
-            <column name="Body" sql-type="varchar(20)" length="20"/>
+            <column name="Body" sql-type="varchar(50)" length="50"/>
         </property>
         <many-to-one name="carByCarId" class="DataBase.CarEntity">
             <column name="Car_Id"/>

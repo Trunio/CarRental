@@ -13,10 +13,10 @@
         <column name="RentalBase_id"/>
     </many-to-one>
     <property name="mark">
-        <column name="Mark" sql-type="varchar(20)" length="20"/>
+        <column name="Mark" sql-type="varchar(50)" length="50"/>
     </property>
     <property name="color">
-        <column name="Color" sql-type="varchar(20)" length="20"/>
+        <column name="Color" sql-type="varchar(50)" length="50"/>
     </property>
     <property name="productionDate">
         <column name="Production_Date" sql-type="date"/>
@@ -25,7 +25,7 @@
         <column name="Price" sql-type="float" precision="-1"/>
     </property>
     <property name="category">
-        <column name="Category" sql-type="varchar(20)" length="20"/>
+        <column name="Category" sql-type="varchar(50)" length="50"/>
     </property>
 </class>
 </hibernate-mapping>

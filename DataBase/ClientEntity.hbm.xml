@@ -10,13 +10,13 @@
             <generator class="native" />
         </id>
         <property name="name">
-            <column name="Name" sql-type="varchar(20)" length="20"/>
+            <column name="Name" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="surname">
-            <column name="Surname" sql-type="varchar(20)" length="20"/>
+            <column name="Surname" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="telephone">
-            <column name="Telephone" sql-type="varchar(20)" length="20"/>
+            <column name="Telephone" sql-type="varchar(50)" length="50"/>
         </property>
         <many-to-one name="adressByAdressId" class="DataBase.Adress">
             <column name="Adress_ID"/>

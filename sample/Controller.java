@@ -4,6 +4,7 @@ package sample;
 import DataBase.CarEntity;
 import DataBase.ClientEntity;
 import DataBase.LoginEntity;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -125,5 +126,8 @@ public class Controller implements Initializable {
     }
 
 
+    public void Close(ActionEvent actionEvent) {
+        Platform.exit();
+    }
 }
 
